@@ -122,36 +122,61 @@ function post_menu() {
 	register_post_type( 'post_type_menu', $args );
 
 }
-
-// Lo enganchamos en la acción init y llamamos a la función create_menu_taxonomies() cuando arranque
-add_action( 'init', 'create_menu_taxonomies', 0 );  
-
-
-function create_menu_taxonomies() {
-  /* Configuramos las etiquetas que mostraremos en el escritorio de WordPress */
-  $labels = array(
-    'name'             => _x( 'Tipos', 'taxonomy general name' ),
-    'singular_name'    => _x( 'Tipo', 'taxonomy singular name' ),
-    'search_items'     =>  __( 'Buscar por Tipo' ),
-    'all_items'        => __( 'Todos los Tipos' ),
-    'parent_item'      => __( 'Tipo padre' ),
-    'parent_item_colon'=> __( 'Tipo padre:' ),
-    'edit_item'        => __( 'Editar Tipo' ),
-    'update_item'      => __( 'Actualizar Tipo' ),
-    'add_new_item'     => __( 'Añadir nuevo Tipo' ),
-    'new_item_name'    => __( 'Nombre del nuevo Tipo' ),
-  );
-  
-  /* Registramos la taxonomía y la configuramos como jerárquica (al estilo de las categorías) */
-  register_taxonomy( 'tipo', array( 'post_type_menu' ), array(
-    'hierarchical'       => true,
-    'labels'             => $labels,
-    'show_ui'            => true,
-    'query_var'          => true,
-    'rewrite'            => array( 'slug' => 'tipo' ),
-  ));
-  
-  /* Si quieres añadir la siguiente taxonomía del ejemplo, sustituye esta línea por la del código correspondiente */
-  
-}
 add_action( 'init', 'post_menu', 0 );
+
+// Register Custom Post Type
+function custom_post_type() {
+
+	$labels = array(
+		'name'                  => _x( 'ListaMotos', 'Post Type General Name', 'blog.auteco.com' ),
+		'singular_name'         => _x( 'ListaMotos', 'Post Type Singular Name', 'blog.auteco.com' ),
+		'menu_name'             => __( 'ListaMotos', 'blog.auteco.com' ),
+		'name_admin_bar'        => __( 'ListaMotos', 'blog.auteco.com' ),
+		'archives'              => __( 'Archivos', 'blog.auteco.com' ),
+		'attributes'            => __( 'Atributos', 'blog.auteco.com' ),
+		'parent_item_colon'     => __( 'Parientes', 'blog.auteco.com' ),
+		'all_items'             => __( 'ListaMotos', 'blog.auteco.com' ),
+		'add_new_item'          => __( 'Agregar nueva lista', 'blog.auteco.com' ),
+		'add_new'               => __( 'Agregar nuevo', 'blog.auteco.com' ),
+		'new_item'              => __( 'Nueva lista', 'blog.auteco.com' ),
+		'edit_item'             => __( 'Editar lista', 'blog.auteco.com' ),
+		'update_item'           => __( 'Actualizar lista', 'blog.auteco.com' ),
+		'view_item'             => __( 'Ver lista', 'blog.auteco.com' ),
+		'view_items'            => __( 'Ver lista', 'blog.auteco.com' ),
+		'search_items'          => __( 'Buscar lista', 'blog.auteco.com' ),
+		'not_found'             => __( 'No encontrado', 'blog.auteco.com' ),
+		'not_found_in_trash'    => __( 'No encontrado en papelera', 'blog.auteco.com' ),
+		'featured_image'        => __( 'Imagen Destacada', 'blog.auteco.com' ),
+		'set_featured_image'    => __( 'Seleccionar imagen destacada', 'blog.auteco.com' ),
+		'remove_featured_image' => __( 'Eliminar Imagen destacada', 'blog.auteco.com' ),
+		'use_featured_image'    => __( 'Usar imagen destacada', 'blog.auteco.com' ),
+		'insert_into_item'      => __( 'Insertar en la lista', 'blog.auteco.com' ),
+		'uploaded_to_this_item' => __( 'Insertar en la lista', 'blog.auteco.com' ),
+		'items_list'            => __( 'Lista de listas', 'blog.auteco.com' ),
+		'items_list_navigation' => __( 'Navegar lista', 'blog.auteco.com' ),
+		'filter_items_list'     => __( 'Filtrar lista', 'blog.auteco.com' ),
+	);
+	$args = array(
+		'label'                 => __( 'ListaMotos', 'blog.auteco.com' ),
+		'description'           => __( 'Lista con todas las motos de auteco', 'blog.auteco.com' ),
+		'labels'                => $labels,
+		'supports'              => array( 'title', 'editor', 'thumbnail', 'comments', 'trackbacks', 'revisions', 'custom-fields', 'page-attributes', 'post-formats' ),
+		'taxonomies'            => array( 'category'/*, 'post_tag' */),
+		'hierarchical'          => true,
+		'public'                => true,
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'menu_position'         => 10,
+		'menu_icon'             => 'dashicons-admin-page',
+		'show_in_admin_bar'     => true,
+		'show_in_nav_menus'     => true,
+		'can_export'            => true,
+		'has_archive'           => true,
+		'exclude_from_search'   => true,
+		'publicly_queryable'    => true,
+		'capability_type'       => 'page',
+	);
+	register_post_type( 'ListaMotos', $args );
+
+}
+add_action( 'init', 'custom_post_type', 0 );
